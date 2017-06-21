@@ -1,0 +1,22 @@
+extends ../layout
+
+block content
+ if currentUser
+  h2 Hi, #{currentUser.username}. These are your tweets:
+ if tweets
+  each tweet in tweets
+   .single-tweet
+    p.author @#{tweet.author.username}:
+    p.body!= tweet.newBody
+    .tweet-info
+     if currentUser && tweet.likedBy.indexOf(currentUser._id)===-1
+      a(href=`tweet/${tweet._id}/like`)
+       i.fa.fa-thumbs-o-up
+     else if currentUser
+      a(href=`tweet/${tweet._id}/dislike`)
+       i.fa.fa-thumbs-o-down
+      i.fa.fa-thumbs-up
+     .tweet-likes Likes: #{tweet.likes}
+     .tweet-views Views: #{tweet.views}
+ else 
+  h3 No tweets yet. You can always make a <a href="/tweet">Tweet</a>

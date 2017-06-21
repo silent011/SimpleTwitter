@@ -1,0 +1,42 @@
+doctype html
+html(lang="en")
+head
+    meta(charset="UTF-8")
+    meta(name="viewport", content="width=device-width, initial-scale=1.0")
+    meta(http-equiv="X-UA-Compatible", content="ie=edge")
+    title Twitter
+    link(rel="stylesheet",href="/styles/style.css")
+    link(rel="stylesheet",type="text/css",href="/styles/font-awesome.min.css")
+body
+
+    header
+        nav
+            ul.left-nav
+              li
+               a(href="/") Home
+              if currentUser
+                li
+                 a(href="/tweet") Add Tweet        
+                if currentUser.roles.indexOf('Admin')>-1
+                 li
+                  a(href="/category/add") Add Category  
+            ul.right-nav
+                if currentUser
+                    li= currentUser.username
+                    li
+                        a(href="/user/logout") Log out
+                else  
+                    li
+                        a(href="/user/login") Login
+                    li
+                        a(href="/user/register") Register
+             
+    if globalError
+     div.error-box
+      h2= globalError
+    if globalMsg
+     div.msg-box
+      h2= globalMsg
+    main
+     block content
+    footer &copy; Twitter, 2017
